@@ -69,7 +69,7 @@ pipeline {
     }
     post {
         always {
-            dir("pipeline") {
+            dir("01-pipeline") {
                 sh 'docker compose down json_server postman'
             }
         }
