@@ -107,21 +107,21 @@ pipeline {
         }
         stage('Build images') {
             steps {
-                dir("pipeline") {
+                dir("01-pipeline") {
                     sh 'docker compose build json_server'
                 }
             }
         }
         stage('Setup & Provisioning') {
             steps {
-                dir("pipeline") {
+                dir("01-pipeline") {
                     sh 'docker compose up json_server -d'
                 }
             }
         }
         stage('Run api automate test') {
             steps {
-                dir("pipeline") {
+                dir("01-pipeline") {
                     sh 'docker compose build postman'
                     sh 'docker compose up postman --abort-on-container-exit'
                 }
@@ -130,7 +130,7 @@ pipeline {
     }
     post {
         always {
-            dir("pipeline") {
+            dir("01-pipeline") {
                 sh 'docker compose down json_server postman'
             }
         }
@@ -185,5 +185,7 @@ Go to `http://localhost:3001`
 ---
 
 ### 4.2 Polling git for trigger pipelines
+
+[cronjob](https://crontab.guru/)
 
 Go to the pipeline: Configure > Build Triggers > Poll SCM > input `* * * * *`
