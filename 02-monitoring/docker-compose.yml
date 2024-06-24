@@ -37,10 +37,14 @@ services:
     volumes:
       - ./database:/docker-entrypoint-initdb.d/
     ports:
-      - '5434:5432'
+      - "5434:5432"
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -h localhost -p 5432 -U $$POSTGRES_USER"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -d $$POSTGRES_DB -h localhost -p 5432 -U $$POSTGRES_USER",
+        ]
       interval: 10s
       timeout: 10s
       retries: 60
@@ -58,10 +62,20 @@ services:
       - ./newman/reports:/etc/newman/reports
     depends_on:
       - user_api
-  
+
   lgtm:
     image: grafana/otel-lgtm:0.6.0
     ports:
-      - '4317:4317'
-      - '4318:4318' 
-      - '4000:3000' # dashboard
+      - "4317:4317"
+      - "4318:4318"
+      - "4000:3000" # dashboard
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter
+    ports:
+      - 9187:9187
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:postgres@db:5432/user?sslmode=disable"
+    depends_on:
+      db:
+        condition: service_healthy
