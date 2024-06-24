@@ -61,7 +61,7 @@ pipeline {
                     dir("01-pipeline") {
                         sh 'docker stop my_json_server_dev || true'
                         sh 'docker rm my_json_server_dev || true'
-                        sh 'docker run -p 3001:3000 --name my_json_server_dev -d $DOCKER_USER/my_json_server:$BUILD_NUMBER'
+                        sh 'docker run -p 3001:3000 --name my_json_server_dev --rm -d $DOCKER_USER/my_json_server:$BUILD_NUMBER'
                     }
                 }
             }
@@ -71,6 +71,7 @@ pipeline {
         always {
             dir("01-pipeline") {
                 sh 'docker compose down json_server postman'
+                sh 'docker stop my_json_server_dev'
             }
         }
     }
