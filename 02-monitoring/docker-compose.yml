@@ -64,7 +64,10 @@ services:
       - user_api
 
   lgtm:
-    image: grafana/otel-lgtm:0.6.0
+    # image: grafana/otel-lgtm:0.6.0
+    build:
+      context: ./grafana
+      dockerfile: Dockerfile
     ports:
       - "4317:4317"
       - "4318:4318"
