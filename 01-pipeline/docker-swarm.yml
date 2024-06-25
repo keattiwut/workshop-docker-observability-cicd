@@ -1,10 +1,3 @@
-# docker swarm init
-# docker stack deploy --compose-file docker-swarm.yml stackdemo
-# docker service ls
-# docker service scale stackdemo_json_server=3
-# docker stack rm stackdemo
-# docker swarm leave --force
-
 services:
   json_server:
     image: my_json_server:1.0

@@ -189,3 +189,18 @@ Go to `http://localhost:3001`
 [cronjob](https://crontab.guru/)
 
 Go to the pipeline: Configure > Build Triggers > Poll SCM > input `* * * * *`
+
+
+
+
+
+# Deploy with Docker Swarm
+
+```sh
+# docker swarm init
+# docker stack deploy --compose-file docker-swarm.yml stackdemo
+# docker service ls
+# docker service scale stackdemo_json_server=3
+# docker stack rm stackdemo
+# docker swarm leave --force
+```
